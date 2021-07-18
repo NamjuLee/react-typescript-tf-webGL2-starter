@@ -4,7 +4,7 @@ import { Application } from '../';
 
 export class Point{
     app: Application;
-    gl: WebGLRenderingContext;
+    gl: WebGL2RenderingContext;
     program: WebGLProgram;
     fragmentShader: WebGLShader;
     vertexShader: WebGLShader;
@@ -51,7 +51,7 @@ export class Point{
     color: number[];
     colArray: Float32Array;
 
-    constructor(app: Application, gl: WebGLRenderingContext, r: number = 0.2, g: number = 0.2, b: number = 0.0, a: number = 0.1) {
+    constructor(app: Application, gl: WebGL2RenderingContext, r: number = 0.2, g: number = 0.2, b: number = 0.0, a: number = 0.1) {
         this.app = app;
         this.gl = gl;
         this.color = [r, g, b, a];
