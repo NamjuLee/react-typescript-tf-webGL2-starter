@@ -1,32 +1,31 @@
 import { GLUtility } from '../GL/GLUtility';
+import { Application } from '..';
 
-import { Application } from '../';
+export class Triangle{
+    public app: Application;
+    public gl: WebGL2RenderingContext;
+    public program: WebGLProgram;
+    public fragmentShader: WebGLShader;
+    public vertexShader: WebGLShader;
+    public matrixLocation: WebGLProgram;
+    public posBuffer: WebGLBuffer;
+    public colBuffer: WebGLBuffer;
+    public vertexs: Float32Array;
 
-export class Point{
-    app: Application;
-    gl: WebGL2RenderingContext;
-    program: WebGLProgram;
-    fragmentShader: WebGLShader;
-    vertexShader: WebGLShader;
-    matrixLocation: WebGLProgram;
-    posBuffer: WebGLBuffer;
-    colBuffer: WebGLBuffer;
-    vertexs: Float32Array;
-
-    posLocAtt: number;
-    colLocAtt: number;
-    matLoc: WebGLUniformLocation;
-    colLoc: WebGLUniformLocation;
-    cVecLoc: WebGLUniformLocation;
-    mouseLoc: WebGLUniformLocation;
-    timeGL: WebGLUniformLocation;
+    public posLocAtt: number;
+    public colLocAtt: number;
+    public matLoc: WebGLUniformLocation;
+    public colLoc: WebGLUniformLocation;
+    public cVecLoc: WebGLUniformLocation;
+    public mouseLoc: WebGLUniformLocation;
+    public timeGL: WebGLUniformLocation;
     // startTime: number;
     // randomSeed: number;
 
-    vShader: WebGLShader;
-    fShader: WebGLShader;
+    public vShader: WebGLShader;
+    public fShader: WebGLShader;
 
-    v = `
+    public v = `
     attribute vec2 a_position;
 
     void main() {
@@ -34,7 +33,7 @@ export class Point{
     }
     `;
 
-    f = `
+    public f = `
     precision mediump float;
 
     uniform vec4 u_color;
@@ -45,11 +44,11 @@ export class Point{
     }
     `;
 
-    positionAttribLocation: WebGLProgram;
-    colorAttribLocation: WebGLProgram;
-    translation: number[];
-    color: number[];
-    colArray: Float32Array;
+    public positionAttribLocation: WebGLProgram;
+    public colorAttribLocation: WebGLProgram;
+    public translation: number[];
+    public color: number[];
+    public colArray: Float32Array;
 
     constructor(app: Application, gl: WebGL2RenderingContext, r: number = 0.2, g: number = 0.2, b: number = 0.0, a: number = 0.1) {
         this.app = app;
@@ -59,7 +58,7 @@ export class Point{
         this.app.scene.geo.push(this);
 
     }
-    InitShader() {
+    public InitShader() {
         let vShader = GLUtility.CreateShader(this.gl, this.gl.VERTEX_SHADER as unknown as WebGLShader, this.v); // '/shader/vsCanvas.glsl');
         let fShader = GLUtility.CreateShader(this.gl, this.gl.FRAGMENT_SHADER as unknown as WebGLShader, this.f); // '/shader/fsColor.glsl');
 
@@ -71,17 +70,16 @@ export class Point{
         }
         this.vertexs = new Float32Array([
             // left column
-            0, 0,
-            -1, -1,
-            1, -1,
+            0,     0.5,
+            -0.5, -0.5,
+            0.5,  -0.5,
             // 1, 1,
             // -1, 1,
             // -1, - 1
 
         ]);
     }
-    Render(gl: WebGLRenderingContext) {
-
+    public Render(gl: WebGLRenderingContext) {
         gl.useProgram(this.program);
         this.posBuffer = this.gl.createBuffer() as WebGLBuffer;
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.posBuffer);

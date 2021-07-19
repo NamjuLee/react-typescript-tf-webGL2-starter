@@ -3,15 +3,14 @@ import { Renderer } from './Core/Renderer';
 
 import { Scene } from './Scene/Scene';
 
-import { Point } from './Geometry/Point';
+import { Triangle } from './Geometry/Triangle';
 
 export class Application {
+    public host: HTMLElement;
+    public canvas: CanvasGL;
+    public renderer:Renderer;
 
-    host: HTMLElement;
-    canvas: CanvasGL;
-    renderer:Renderer;
-
-    scene: Scene;
+    public scene: Scene;
 
     constructor(id: string) {
         console.log('id: ' + id + ', App Init!!!!!');
@@ -28,6 +27,6 @@ export class Application {
         this.canvas.RenderIndependentCanvas = this.renderer.Render;
     }
     InitPost(){
-        new Point(this, this.canvas.gl,1,0,0)
+        new Triangle(this, this.canvas.gl,1,0,0)
     }
 }

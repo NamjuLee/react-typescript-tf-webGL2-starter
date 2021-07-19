@@ -1,6 +1,6 @@
 
 export class GLUtility{
-    static CreateShader(gl: WebGL2RenderingContext, type: WebGLShader, shaderString: string) {
+    public static CreateShader(gl: WebGL2RenderingContext, type: WebGLShader, shaderString: string) {
         const shader = gl.createShader(type as unknown as number);
         if (shader === null) {return null; }
         gl.shaderSource(shader, shaderString);
@@ -11,7 +11,7 @@ export class GLUtility{
         gl.deleteShader(shader);
         return null;
     }
-    static CreateProgram(gl: WebGL2RenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader, needValidate: boolean = true): WebGLProgram | null {
+    public static CreateProgram(gl: WebGL2RenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader, needValidate: boolean = true): WebGLProgram | null {
         const program = gl.createProgram();
         if (program === null ) {return null; }
         gl.attachShader(program, vertexShader);
