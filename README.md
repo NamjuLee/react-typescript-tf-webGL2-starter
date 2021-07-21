@@ -5,23 +5,21 @@ nj.namju@gmail.com
 
 www.njstudio.co.kr
 
-This code is for the those who want to learn or develop CAD systems, Visualization, or Drawing tools based on HTML Canvas.
-
 ----
 
-[OpenTK Starter]() 
+[OpenTK Starter](https://github.com/NamjuLee/OpenTK-starter) 
 
-[THREE Starter]() 
+[THREE, TensorflowJS Starter](https://github.com/NamjuLee/three-tensorflow-typescript-starter)
 
-[WebGL Starter]() 
+[WebGL2, React, TensorflowJS, Typescript Starter](https://github.com/NamjuLee/react-typescript-tf-webG2L-starter)
 
-[WebGL GLSL Starter]() 
+[HTML Canvas, TensorflowJS Starter](https://github.com/NamjuLee/HTML-Canvas-tensorflow-sandbox-starter)
 
-[HTML Canvas Starter](https://github.com/NamjuLee/HTML-Canvas-Sandbox-Starter)
+[HTML Canvas, TensorflowJS, React Starter](https://github.com/NamjuLee/NJSLab-web-react-tf-sandbox-starter)
 
-[Tensorflow JS Starter]() 
+[Typescirpt, HTML Canvas Starter for Mapping(JSAPI) Visualization](https://github.com/NamjuLee/mapping-and-visualization)
 
-[Typescript Starter]() 
+[Typescript, React Starter](https://github.com/NamjuLee/react-typescript-starter) 
 
 
 ----
