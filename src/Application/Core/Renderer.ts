@@ -6,7 +6,7 @@ export class Renderer{
     constructor(app: Application) {
         this.app = app;
     }
-    public Render(gl : WebGL2RenderingContext) {
-        this.app.scene.Render(gl);
+    public render(gl : WebGL2RenderingContext) {
+        this.app.scene.render(gl);
     }
 }

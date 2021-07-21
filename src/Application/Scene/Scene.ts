@@ -5,9 +5,9 @@ export class Scene{
     constructor(app: Application){
         this.app = app;
     }
-    public Render(gl : WebGL2RenderingContext ){
+    public render(gl : WebGL2RenderingContext ){
         for(let g of this.geo){
-            g.Render(gl);
+            g.render(gl);
         }
         console.log('rendering....');
     }

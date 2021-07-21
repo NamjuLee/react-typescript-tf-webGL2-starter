@@ -54,18 +54,18 @@ export class Triangle{
         this.app = app;
         this.gl = gl;
         this.color = [r, g, b, a];
-        this.InitShader();
+        this.initShader();
         this.app.scene.geo.push(this);
 
     }
-    public InitShader() {
-        let vShader = GLUtility.CreateShader(this.gl, this.gl.VERTEX_SHADER as unknown as WebGLShader, this.v); // '/shader/vsCanvas.glsl');
-        let fShader = GLUtility.CreateShader(this.gl, this.gl.FRAGMENT_SHADER as unknown as WebGLShader, this.f); // '/shader/fsColor.glsl');
+    public initShader() {
+        const vShader = GLUtility.createShader(this.gl, this.gl.VERTEX_SHADER as unknown as WebGLShader, this.v); // '/shader/vsCanvas.glsl');
+        const fShader = GLUtility.createShader(this.gl, this.gl.FRAGMENT_SHADER as unknown as WebGLShader, this.f); // '/shader/fsColor.glsl');
 
         if (vShader && fShader) {
             this.vShader = vShader;
             this.fShader = fShader;
-            let program = GLUtility.CreateProgram(this.gl, vShader, fShader);
+            const program = GLUtility.createProgram(this.gl, vShader, fShader);
             if (program) { this.program = program; }
         }
         this.vertexs = new Float32Array([
@@ -79,7 +79,7 @@ export class Triangle{
 
         ]);
     }
-    public Render(gl: WebGLRenderingContext) {
+    public render(gl: WebGLRenderingContext) {
         gl.useProgram(this.program);
         this.posBuffer = this.gl.createBuffer() as WebGLBuffer;
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.posBuffer);

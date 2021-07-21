@@ -1,3 +1,4 @@
+import { version } from '@tensorflow/tfjs';
 import { CanvasGL } from './Core/CanvasGL';
 import { Renderer } from './Core/Renderer';
 
@@ -17,16 +18,18 @@ export class Application {
         const host = document.getElementById(id);
         if (host) {this.host = host; }
 
-        this.Init();
-        this.InitPost();
+        this.init();
+        this.initPost();
     }
-    Init(){
+    public init(){
         this.scene = new Scene(this);
         this.canvas = new CanvasGL(this);
         this.renderer = new Renderer(this);
-        this.canvas.RenderIndependentCanvas = this.renderer.Render;
+        this.canvas.renderIndependentCanvas = this.renderer.render;
     }
-    InitPost(){
-        new Triangle(this, this.canvas.gl,1,0,0)
+    public initPost(){
+        new Triangle(this, this.canvas.gl,1,0,0);
+
+        console.log('tf version: ', version);
     }
 }
