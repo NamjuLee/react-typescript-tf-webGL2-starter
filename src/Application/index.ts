@@ -26,10 +26,10 @@ export class Application {
         this.canvas = new CanvasGL(this);
         this.renderer = new Renderer(this);
         this.canvas.renderIndependentCanvas = this.renderer.render;
-    }
-    public initPost(){
-        new Triangle(this, this.canvas.gl,1,0,0);
 
-        console.log('tf version: ', version);
+        console.log('tf version: ', version);    
+    }
+    public initPost(){    
+        new Triangle(this, this.canvas.gl, 1,0,0);
     }
 }

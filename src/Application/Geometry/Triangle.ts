@@ -1,4 +1,4 @@
-import { GLUtility } from '../GL/GLUtility';
+import { createShader, createProgram } from '../GL/GLUtility';
 import { Application } from '..';
 
 export class Triangle{
@@ -7,76 +7,75 @@ export class Triangle{
     public program: WebGLProgram;
     public fragmentShader: WebGLShader;
     public vertexShader: WebGLShader;
-    public matrixLocation: WebGLProgram;
+    
     public posBuffer: WebGLBuffer;
-    public colBuffer: WebGLBuffer;
-    public vertexs: Float32Array;
-
     public posLocAtt: number;
-    public colLocAtt: number;
-    public matLoc: WebGLUniformLocation;
+
+    public vertexs: Float32Array;
+    public color: Float32Array;
+
     public colLoc: WebGLUniformLocation;
-    public cVecLoc: WebGLUniformLocation;
     public mouseLoc: WebGLUniformLocation;
-    public timeGL: WebGLUniformLocation;
-    // startTime: number;
-    // randomSeed: number;
 
-    public vShader: WebGLShader;
-    public fShader: WebGLShader;
+    public v = `#version 300 es
+    precision mediump float;
 
-    public v = `
-    attribute vec2 a_position;
+    in vec2 a_position;
+    
+    uniform vec2 mouse;
+
+    out float dis;
+    out vec2 pos;
 
     void main() {
-      gl_Position = vec4(a_position, 0, 1);
+        dis = distance(mouse, a_position);
+        pos = vec2(a_position.xy);
+        gl_Position = vec4(a_position, 0, 1);
     }
     `;
 
-    public f = `
+    public f = `#version 300 es
     precision mediump float;
+
+    in vec2 pos;
+    in float dis;
 
     uniform vec4 u_color;
 
+    out vec4 finalColor;
+
     void main() {
-       gl_FragColor = u_color;
-        // gl_FragColor = vec4(1,0,0,0);
+
+        float r = u_color.r * dis;
+        float g = pos.x * dis;
+        float b = pos.y * dis;
+
+        finalColor = vec4(r, g, b , 1);
     }
     `;
-
-    public positionAttribLocation: WebGLProgram;
-    public colorAttribLocation: WebGLProgram;
-    public translation: number[];
-    public color: number[];
-    public colArray: Float32Array;
-
     constructor(app: Application, gl: WebGL2RenderingContext, r: number = 0.2, g: number = 0.2, b: number = 0.0, a: number = 0.1) {
         this.app = app;
         this.gl = gl;
-        this.color = [r, g, b, a];
+        this.color = new Float32Array([r, g, b, a]);
         this.initShader();
         this.app.scene.geo.push(this);
 
     }
     public initShader() {
-        const vShader = GLUtility.createShader(this.gl, this.gl.VERTEX_SHADER as unknown as WebGLShader, this.v); // '/shader/vsCanvas.glsl');
-        const fShader = GLUtility.createShader(this.gl, this.gl.FRAGMENT_SHADER as unknown as WebGLShader, this.f); // '/shader/fsColor.glsl');
+        const vShader = createShader(this.gl, this.gl.VERTEX_SHADER as unknown as WebGLShader, this.v); // '/shader/vsCanvas.glsl');
+        const fShader = createShader(this.gl, this.gl.FRAGMENT_SHADER as unknown as WebGLShader, this.f); // '/shader/fsColor.glsl');
 
         if (vShader && fShader) {
-            this.vShader = vShader;
-            this.fShader = fShader;
-            const program = GLUtility.createProgram(this.gl, vShader, fShader);
+            this.vertexShader = vShader;
+            this.fragmentShader = fShader;
+            const program = createProgram(this.gl, vShader, fShader);
             if (program) { this.program = program; }
         }
+        const offset = 0.67;
         this.vertexs = new Float32Array([
-            // left column
-            0,     0.5,
-            -0.5, -0.5,
-            0.5,  -0.5,
-            // 1, 1,
-            // -1, 1,
-            // -1, - 1
-
+            0,          offset,
+            -offset,   -offset,
+            offset,    -offset,
         ]);
     }
     public render(gl: WebGLRenderingContext) {
@@ -88,19 +87,30 @@ export class Triangle{
         this.posLocAtt = this.gl.getAttribLocation(this.program, 'a_position');
         this.colLoc = this.gl.getUniformLocation(this.program, 'u_color') as WebGLUniformLocation;
 
-        // Tell the attribute how to get data out of posBuffer (ARRAY_BUFFER)
-        let size = 2;          // 2 components per iteration
-        let type = gl.FLOAT;   // the data is 32bit floats
-        let normalize = false; // don't normalize the data
-        let stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
+        // tell the attribute how to get data out of posBuffer (ARRAY_BUFFER)
+        const size = 2;          // 2 components per iteration
+        const type = gl.FLOAT;   // the data is 32bit floats
+        const normalize = false; // don't normalize the data
+        const stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
         let offset = 0;        // start at the beginning of the buffer
         gl.vertexAttribPointer(this.posLocAtt, size, type, normalize, stride, offset);
         gl.enableVertexAttribArray(this.posLocAtt);
         gl.uniform4fv(this.colLoc, new Float32Array(this.color));
 
-        let primitiveType = gl.TRIANGLE_FAN; // LINE_LOOP; // gl.TRIANGLE_STRIP;
+
+        this.mouseLoc  = this.gl.getUniformLocation(this.program, 'mouse') as WebGLUniformLocation;
+        // with/out remap
+        gl.uniform2f(this.mouseLoc, this.remap(this.app.canvas.mouse[0], gl.canvas.width), this.remap(this.app.canvas.mouse[1], gl.canvas.height) * -1);
+        // gl.uniform2f(this.mouseLoc, this.app.canvas.mouse[0], this.app.canvas.mouse[1]);
+        
+
+        const primitiveType = gl.TRIANGLE_FAN; // LINE_LOOP; // gl.TRIANGLE_STRIP;
         offset = 0;
-        let count = this.vertexs.length * 0.5;
+
+        const count = this.vertexs.length * 0.5;
         gl.drawArrays(primitiveType, offset, count);
+    }
+    private remap(value: number, OldMax: number): number {
+        return ((value * 2) / (OldMax)) - 1;
     }
 }

@@ -5,15 +5,12 @@ export class CanvasGL {
     public gl: WebGL2RenderingContext;
     public canvas: HTMLCanvasElement;
     public isActive: boolean = true;
-
+    public mouse: number[] = [0, 0];
     constructor(app: Application) {
         this.app = app;
         this.initCanvas(this.app.host);
     }
     private initCanvas(hostDiv: HTMLElement) {
-        console.log(hostDiv.style.height);
-        console.log(hostDiv.style.width);
-
         this.canvas = document.createElement('canvas');
         this.canvas.style.position = 'absolute';
         this.canvas.style.height = hostDiv.style.height + 'px';
@@ -29,6 +26,11 @@ export class CanvasGL {
         if (!this.gl) { console.debug('your browser does not support WebGL.'); }
 
         this.loopIndependentCanvas(this.gl);
+
+        hostDiv.onmousemove = (e: MouseEvent) => {
+            this.mouse[0] = e.clientX;
+            this.mouse[1] = e.clientY;
+        }
     }
     public loopIndependentCanvas(gl: WebGL2RenderingContext) {
         if (!this.isActive) { return; }
