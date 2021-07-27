@@ -23,7 +23,7 @@ export class CanvasGL {
         this.canvas.height = hostDiv.clientHeight;
         let GLParm = { preserveDrawingBuffer: true, antialias: true, depth: true };
         this.gl = this.canvas.getContext('webgl2', GLParm) as WebGL2RenderingContext; // experimental-webgl
-        if (!this.gl) { console.debug('your browser does not support WebGL.'); }
+        if (!this.gl) { console.debug('your browser does not support WebGL2.'); }
 
         this.loopIndependentCanvas(this.gl);
 
@@ -34,7 +34,7 @@ export class CanvasGL {
     }
     public loopIndependentCanvas(gl: WebGL2RenderingContext) {
         if (!this.isActive) { return; }
-        requestAnimationFrame(() => { this.loopIndependentCanvas(gl); }); 
+        requestAnimationFrame(() => { this.loopIndependentCanvas(gl); });
         this.renderIndependentCanvas(gl);        
     }
     public renderIndependentCanvas(gl: WebGL2RenderingContext) {

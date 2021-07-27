@@ -9,6 +9,6 @@ export class Scene{
         for(let g of this.geo){
             g.render(gl);
         }
-        console.log('rendering....');
+        // console.log('rendering....');
     }
 }

@@ -5,13 +5,23 @@ nj.namju@gmail.com
 
 www.njstudio.co.kr
 
+NodeJS: https://nodejs.org/en/
+
+Typescript: https://www.typescriptlang.org/
+
+TensorflowJS: https://www.tensorflow.org/js
+
+WebGL2: https://www.khronos.org/registry/webgl/specs/latest/2.0/
+
+GLSL: https://en.wikipedia.org/wiki/OpenGL_Shading_Language
+
 ----
 
 [OpenTK Starter](https://github.com/NamjuLee/OpenTK-starter) 
 
 [THREE, TensorflowJS Starter](https://github.com/NamjuLee/three-tensorflow-typescript-starter)
 
-[WebGL2, React, TensorflowJS, Typescript Starter](https://github.com/NamjuLee/react-typescript-tf-webG2L-starter)
+[WebGL2, React, TensorflowJS, Typescript Starter](https://github.com/NamjuLee/react-typescript-tf-webGL2-starter)
 
 [HTML Canvas, TensorflowJS Starter](https://github.com/NamjuLee/HTML-Canvas-tensorflow-sandbox-starter)
 

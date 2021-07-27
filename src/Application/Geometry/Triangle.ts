@@ -11,7 +11,7 @@ export class Triangle{
     public posBuffer: WebGLBuffer;
     public posLocAtt: number;
 
-    public vertexs: Float32Array;
+    public vertexs: number[] = [];
     public color: Float32Array;
 
     public colLoc: WebGLUniformLocation;
@@ -56,7 +56,16 @@ export class Triangle{
     constructor(app: Application, gl: WebGL2RenderingContext, r: number = 0.2, g: number = 0.2, b: number = 0.0, a: number = 0.1) {
         this.app = app;
         this.gl = gl;
+
         this.color = new Float32Array([r, g, b, a]);
+
+        const offset = 0.67;
+        this.vertexs = [
+            0,          offset ,
+            -offset,   -offset ,
+            offset,    -offset,
+        ];
+
         this.initShader();
         this.app.scene.geo.push(this);
 
@@ -71,12 +80,6 @@ export class Triangle{
             const program = createProgram(this.gl, vShader, fShader);
             if (program) { this.program = program; }
         }
-        const offset = 0.67;
-        this.vertexs = new Float32Array([
-            0,          offset,
-            -offset,   -offset,
-            offset,    -offset,
-        ]);
     }
     public render(gl: WebGLRenderingContext) {
         gl.useProgram(this.program);
@@ -102,7 +105,6 @@ export class Triangle{
         // with/out remap
         gl.uniform2f(this.mouseLoc, this.remap(this.app.canvas.mouse[0], gl.canvas.width), this.remap(this.app.canvas.mouse[1], gl.canvas.height) * -1);
         // gl.uniform2f(this.mouseLoc, this.app.canvas.mouse[0], this.app.canvas.mouse[1]);
-        
 
         const primitiveType = gl.TRIANGLE_FAN; // LINE_LOOP; // gl.TRIANGLE_STRIP;
         offset = 0;
