@@ -3,6 +3,8 @@
 
 nj.namju@gmail.com
 
+Tistory Index: https://computationaldesign.tistory.com/40
+
 www.njstudio.co.kr
 
 NodeJS: https://nodejs.org/en/
@@ -14,6 +16,12 @@ TensorflowJS: https://www.tensorflow.org/js
 WebGL2: https://www.khronos.org/registry/webgl/specs/latest/2.0/
 
 GLSL: https://en.wikipedia.org/wiki/OpenGL_Shading_Language
+
+----
+
+<a href="https://youtu.be/gQtQbzviC14" rel="some text">
+<img src="https://img.youtube.com/vi/gQtQbzviC14/mqdefault.jpg" width="300px" />
+</a>
 
 ----
 
